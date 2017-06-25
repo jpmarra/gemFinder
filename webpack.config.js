@@ -15,8 +15,24 @@ const config = {
     extensions: ['.js', '.jsx'],
   },
   module: {
-    loaders: [
-     { test: /\.jsx?$/, loader: 'babel-loader', exclude: /node_modules/ }
+    rules: [
+     {
+       use: [{
+         loader: 'babel-loader',
+       }],
+       test: /\.(js|jsx)$/,
+       exclude: /node_modules/,
+     },
+     {
+       test: /\.scss$/,
+       use: [{
+         loader: 'style-loader',
+       }, {
+         loader: 'css-loader',
+       }, {
+         loader: 'sass-loader',
+       }],
+     }
    ]
   }
 }

@@ -1,4 +1,5 @@
 const axios = require('axios');
+const model = require('./model');
 
 module.exports = {
   getGem: (req, res) => {
@@ -13,5 +14,9 @@ module.exports = {
       res.send(gem)
     })
     .catch(err => console.error(err))
+  },
+  addFavorite: (req, res) => {
+    model.insertFavorite(req.body);
+    res.sendStatus(201);
   }
 }

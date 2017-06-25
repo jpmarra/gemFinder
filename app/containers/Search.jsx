@@ -11,14 +11,22 @@ export default class Search extends Component {
       result: {}
     }
     this.renderResult = this.renderResult.bind(this);
+    this.addFavorite = this.addFavorite.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   renderResult(){
     if(this.state.resultFound) {
-      return <Result gem={this.state.result}/>
+      return <Result gem={this.state.result} addFavorite={this.addFavorite} />
     }
+  }
+
+  addFavorite(name){
+    let fav = { name }
+    axios.post('/api/create', fav)
+    .then(result => console.log(result))
+    .catch(err => console.error(err))
   }
 
   handleChange(e){
@@ -29,7 +37,6 @@ export default class Search extends Component {
     e.preventDefault();
     axios.get(`/api/gems/${this.state.input}`)
     .then(results => {
-      console.log(results.data)
       this.setState({result: results.data, resultFound: true})
     })
   }
