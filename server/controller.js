@@ -18,5 +18,15 @@ module.exports = {
   addFavorite: (req, res) => {
     model.insertFavorite(req.body);
     res.sendStatus(201);
+  },
+  getFavorites: (req, res) => {
+    model.getFavorites((results) => {
+      res.send(results);
+    })
+  },
+  checkFavorite: (req, res) => {
+    model.checkFavorite(req.params.name, (result) => {
+      res.send(result);
+    })
   }
 }

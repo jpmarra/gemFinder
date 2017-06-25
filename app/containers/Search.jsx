@@ -12,13 +12,15 @@ export default class Search extends Component {
     }
     this.renderResult = this.renderResult.bind(this);
     this.addFavorite = this.addFavorite.bind(this);
+    this.navigateTo = this.navigateTo.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.isFavorite = this.isFavorite.bind(this);
   }
 
   renderResult(){
     if(this.state.resultFound) {
-      return <Result gem={this.state.result} addFavorite={this.addFavorite} />
+      return <Result gem={this.state.result} isFavorite={this.isFavorite} addFavorite={this.addFavorite} />
     }
   }
 
@@ -27,6 +29,24 @@ export default class Search extends Component {
     axios.post('/api/create', fav)
     .then(result => console.log(result))
     .catch(err => console.error(err))
+  }
+
+  isFavorite (name){
+    return new Promise((resolve, reject) => {
+      axios.get(`/api/favorite/${name}`)
+      .then(result => {
+        console.log(`${name} is a favorite: `, result.data);
+        if(result.data){
+          resolve('./assets/images/star-blue.png')
+        }
+        resolve('./assets/images/star-gray.png')
+      })
+    })
+  }
+
+  navigateTo(e){
+    e.preventDefault();
+    this.props.history.push('/favorites');
   }
 
   handleChange(e){
@@ -44,6 +64,7 @@ export default class Search extends Component {
   render() {
     return (
       <div className='Search'>
+        <button onClick={this.navigateTo}>Go to Favorites</button>
         <form>
           <input
             type="text" className="gem-input"

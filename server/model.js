@@ -44,9 +44,20 @@ const getFavorites = (cb) => {
   })
 }
 
+const checkFavorite = (favorite, cb) => {
+  favoriteModel.findOne({name: favorite}, (err, result) => {
+    if(!result){
+      cb(false);
+    } else {
+      cb(true);
+    }
+  })
+}
+
 const favoriteManager = {
   insertFavorite: insertFavorite,
-  getFavorites: getFavorites
+  getFavorites: getFavorites,
+  checkFavorite: checkFavorite
 }
 
 module.exports = favoriteManager;
