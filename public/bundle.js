@@ -7685,14 +7685,29 @@ var Result = function (_Component) {
     var _this = _possibleConstructorReturn(this, (Result.__proto__ || Object.getPrototypeOf(Result)).call(this, props));
 
     _this.state = {};
+    _this.loadDependencies = _this.loadDependencies.bind(_this);
     return _this;
   }
 
   _createClass(Result, [{
-    key: 'render',
-    value: function render() {
+    key: 'loadDependencies',
+    value: function loadDependencies() {
       var _this2 = this;
 
+      if (this.props.gem.dependencies.length > 0) {
+        return this.props.gem.dependencies.map(function (dependency, idx) {
+          return _react2.default.createElement(_Name2.default, { key: idx, name: dependency.name, addFavorite: _this2.props.addFavorite, isFavorite: _this2.props.isFavorite });
+        });
+      }
+      return _react2.default.createElement(
+        'div',
+        null,
+        'NONE'
+      );
+    }
+  }, {
+    key: 'render',
+    value: function render() {
       return _react2.default.createElement(
         'div',
         { className: 'result-container' },
@@ -7722,9 +7737,7 @@ var Result = function (_Component) {
           _react2.default.createElement(
             'div',
             { className: 'dependencies-list' },
-            this.props.gem.dependencies.map(function (dependency, idx) {
-              return _react2.default.createElement(_Name2.default, { name: dependency.name, addFavorite: _this2.props.addFavorite, isFavorite: _this2.props.isFavorite });
-            })
+            this.loadDependencies()
           )
         )
       );
@@ -7795,11 +7808,6 @@ var Name = function (_Component) {
     value: function componentDidMount() {
       var url = this.props.isFavorite(this.props.name);
       this.setState({ url: url });
-      // this.props.isFavorite(this.props.name)
-      // .then(url => {
-      //   console.log('here is the url: ',url);
-      //   this.setState({ url })
-      // })
     }
   }, {
     key: 'render',
@@ -7846,6 +7854,10 @@ var _axios = __webpack_require__(39);
 
 var _axios2 = _interopRequireDefault(_axios);
 
+var _Nav = __webpack_require__(256);
+
+var _Nav2 = _interopRequireDefault(_Nav);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -7865,31 +7877,52 @@ var Favorites = function (_Component) {
     _this.state = {
       favorites: []
     };
+    _this.updateFavorites = _this.updateFavorites.bind(_this);
+    _this.handleClick = _this.handleClick.bind(_this);
+    _this.navigateTo = _this.navigateTo.bind(_this);
     return _this;
   }
 
   _createClass(Favorites, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
+    key: 'updateFavorites',
+    value: function updateFavorites() {
       var favorites = Object.keys(localStorage);
       this.setState({ favorites: favorites });
     }
   }, {
+    key: 'navigateTo',
+    value: function navigateTo(path) {
+      this.props.history.push(path);
+    }
+  }, {
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this.updateFavorites();
+    }
+  }, {
+    key: 'handleClick',
+    value: function handleClick(favorite) {
+      localStorage.removeItem(favorite);
+      this.updateFavorites();
+    }
+  }, {
     key: 'render',
     value: function render() {
+      var _this2 = this;
+
       return _react2.default.createElement(
         'div',
         null,
+        _react2.default.createElement(_Nav2.default, { navigateTo: this.navigateTo }),
         _react2.default.createElement(
           'h1',
           null,
           'Your Favorite Gems'
         ),
-        this.state.favorites.map(function (favorite) {
-          console.log(favorite);
+        this.state.favorites.map(function (favorite, idx) {
           return _react2.default.createElement(
             'div',
-            { className: 'name-container' },
+            { key: idx, className: 'name-container' },
             _react2.default.createElement(
               'a',
               { className: 'name-header',
@@ -7898,7 +7931,9 @@ var Favorites = function (_Component) {
               },
               favorite
             ),
-            _react2.default.createElement('img', { src: './assets/images/star-blue.png' })
+            _react2.default.createElement('img', { src: './assets/images/star-blue.png', onClick: function onClick() {
+                return _this2.handleClick(favorite);
+              } })
           );
         })
       );
@@ -26748,6 +26783,10 @@ var _Result = __webpack_require__(63);
 
 var _Result2 = _interopRequireDefault(_Result);
 
+var _Nav = __webpack_require__(256);
+
+var _Nav2 = _interopRequireDefault(_Nav);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -26788,7 +26827,11 @@ var Search = function (_Component) {
   }, {
     key: 'addFavorite',
     value: function addFavorite(name) {
-      localStorage.setItem(name, name);
+      if (localStorage.getItem(name)) {
+        localStorage.removeItem(name);
+      } else {
+        localStorage.setItem(name, name);
+      }
     }
   }, {
     key: 'isFavorite',
@@ -26797,22 +26840,11 @@ var Search = function (_Component) {
         return './assets/images/star-blue.png';
       }
       return './assets/images/star-gray.png';
-      // return new Promise((resolve, reject) => {
-      //   axios.get(`/api/favorite/${name}`)
-      //   .then(result => {
-      //     console.log(`${name} is a favorite: `, result.data);
-      //     if(result.data){
-      //       resolve('./assets/images/star-blue.png')
-      //     }
-      //     resolve('./assets/images/star-gray.png')
-      //   })
-      // })
     }
   }, {
     key: 'navigateTo',
-    value: function navigateTo(e) {
-      e.preventDefault();
-      this.props.history.push('/favorites');
+    value: function navigateTo(path) {
+      this.props.history.push(path);
     }
   }, {
     key: 'handleChange',
@@ -26835,11 +26867,7 @@ var Search = function (_Component) {
       return _react2.default.createElement(
         'div',
         { className: 'Search' },
-        _react2.default.createElement(
-          'button',
-          { onClick: this.navigateTo },
-          'Go to Favorites'
-        ),
+        _react2.default.createElement(_Nav2.default, { navigateTo: this.navigateTo }),
         _react2.default.createElement(
           'form',
           null,
@@ -27736,6 +27764,47 @@ module.exports = function spread(callback) {
   };
 };
 
+
+/***/ }),
+/* 255 */,
+/* 256 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(6);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Nav = function Nav(props) {
+  return _react2.default.createElement(
+    'div',
+    { className: 'nav-container' },
+    _react2.default.createElement(
+      'button',
+      { onClick: function onClick() {
+          return props.navigateTo('/favorites');
+        } },
+      'Favorites'
+    ),
+    _react2.default.createElement(
+      'button',
+      { onClick: function onClick() {
+          return props.navigateTo('/');
+        } },
+      'Search'
+    )
+  );
+};
+
+exports.default = Nav;
 
 /***/ })
 /******/ ]);

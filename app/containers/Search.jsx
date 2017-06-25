@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import Result from '.././components/Result';
+import Nav from '.././components/Nav';
 
 export default class Search extends Component {
   constructor(){
@@ -25,7 +26,11 @@ export default class Search extends Component {
   }
 
   addFavorite(name){
-    localStorage.setItem(name, name);
+    if(localStorage.getItem(name)){
+      localStorage.removeItem(name);
+    } else {
+      localStorage.setItem(name, name);
+    }
   }
 
   isFavorite (name){
@@ -33,21 +38,10 @@ export default class Search extends Component {
       return './assets/images/star-blue.png';
     }
     return './assets/images/star-gray.png';
-    // return new Promise((resolve, reject) => {
-    //   axios.get(`/api/favorite/${name}`)
-    //   .then(result => {
-    //     console.log(`${name} is a favorite: `, result.data);
-    //     if(result.data){
-    //       resolve('./assets/images/star-blue.png')
-    //     }
-    //     resolve('./assets/images/star-gray.png')
-    //   })
-    // })
   }
 
-  navigateTo(e){
-    e.preventDefault();
-    this.props.history.push('/favorites');
+  navigateTo(path){
+    this.props.history.push(path);
   }
 
   handleChange(e){
@@ -65,7 +59,7 @@ export default class Search extends Component {
   render() {
     return (
       <div className='Search'>
-        <button onClick={this.navigateTo}>Go to Favorites</button>
+        <Nav navigateTo={this.navigateTo}/>
         <form>
           <input
             type="text" className="gem-input"

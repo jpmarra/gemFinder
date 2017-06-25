@@ -7,6 +7,15 @@ export default class Result extends Component {
     this.state = {
 
     }
+    this.loadDependencies = this.loadDependencies.bind(this);
+  }
+  loadDependencies(){
+    if(this.props.gem.dependencies.length > 0){
+      return this.props.gem.dependencies.map((dependency, idx) =>{
+        return <Name key={idx} name={dependency.name} addFavorite={this.props.addFavorite} isFavorite={this.props.isFavorite}/>
+      })
+    }
+    return <div>NONE</div>
   }
   render(){
     return (
@@ -19,9 +28,7 @@ export default class Result extends Component {
         <div className="dependencies-container">
           <text className="dependencies-header">DEPENDENCIES</text>
           <div className="dependencies-list">
-            {this.props.gem.dependencies.map((dependency, idx) =>{
-              return <Name name={dependency.name} addFavorite={this.props.addFavorite} isFavorite={this.props.isFavorite}/>
-            })}
+            {this.loadDependencies()}
           </div>
         </div>
       </div>

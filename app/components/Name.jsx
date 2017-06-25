@@ -22,11 +22,6 @@ export default class Name extends Component {
   componentDidMount(){
     let url = this.props.isFavorite(this.props.name)
     this.setState({ url })
-    // this.props.isFavorite(this.props.name)
-    // .then(url => {
-    //   console.log('here is the url: ',url);
-    //   this.setState({ url })
-    // })
   }
 
   render(){
