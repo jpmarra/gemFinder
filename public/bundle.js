@@ -25787,6 +25787,10 @@ var _axios = __webpack_require__(233);
 
 var _axios2 = _interopRequireDefault(_axios);
 
+var _Result = __webpack_require__(252);
+
+var _Result2 = _interopRequireDefault(_Result);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -25804,14 +25808,24 @@ var Search = function (_Component) {
     var _this = _possibleConstructorReturn(this, (Search.__proto__ || Object.getPrototypeOf(Search)).call(this));
 
     _this.state = {
-      input: ''
+      input: '',
+      resultFound: false,
+      result: {}
     };
+    _this.renderResult = _this.renderResult.bind(_this);
     _this.handleChange = _this.handleChange.bind(_this);
     _this.handleSubmit = _this.handleSubmit.bind(_this);
     return _this;
   }
 
   _createClass(Search, [{
+    key: 'renderResult',
+    value: function renderResult() {
+      if (this.state.resultFound) {
+        return _react2.default.createElement(_Result2.default, { gem: this.state.result });
+      }
+    }
+  }, {
     key: 'handleChange',
     value: function handleChange(e) {
       this.setState({ input: e.target.value });
@@ -25819,10 +25833,12 @@ var Search = function (_Component) {
   }, {
     key: 'handleSubmit',
     value: function handleSubmit(e) {
+      var _this2 = this;
+
       e.preventDefault();
-      console.log('initiating request for ' + this.state.input);
       _axios2.default.get('/api/gems/' + this.state.input).then(function (results) {
-        return console.log(results);
+        console.log(results.data);
+        _this2.setState({ result: results.data, resultFound: true });
       });
     }
   }, {
@@ -25844,6 +25860,11 @@ var Search = function (_Component) {
             { type: 'submit', onClick: this.handleSubmit },
             'Submit'
           )
+        ),
+        _react2.default.createElement(
+          'div',
+          null,
+          this.renderResult()
         )
       );
     }
@@ -27407,6 +27428,81 @@ module.exports = function spread(callback) {
   };
 };
 
+
+/***/ }),
+/* 252 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(49);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Result = function Result(props) {
+  return _react2.default.createElement(
+    "div",
+    { className: "result-container" },
+    _react2.default.createElement(
+      "a",
+      { className: "name-header",
+        target: "_blank",
+        href: "https://rubygems.org/gems/" + props.gem.name
+      },
+      props.gem.name
+    ),
+    _react2.default.createElement(
+      "div",
+      { className: "gem-info-container" },
+      _react2.default.createElement(
+        "text",
+        { className: "info-header" },
+        "INFORMATION"
+      ),
+      _react2.default.createElement(
+        "p",
+        { className: "info-body" },
+        props.gem.info
+      )
+    ),
+    _react2.default.createElement(
+      "div",
+      { className: "dependencies-container" },
+      _react2.default.createElement(
+        "text",
+        { className: "dependencies-header" },
+        "DEPENDENCIES"
+      ),
+      _react2.default.createElement(
+        "div",
+        { className: "dependencies-list" },
+        props.gem.dependencies.map(function (dependency) {
+          return _react2.default.createElement(
+            "div",
+            null,
+            _react2.default.createElement(
+              "a",
+              { className: "name-header",
+                target: "_blank",
+                href: "https://rubygems.org/gems/" + dependency.name
+              },
+              dependency.name
+            )
+          );
+        })
+      )
+    )
+  );
+};
+
+exports.default = Result;
 
 /***/ })
 /******/ ]);

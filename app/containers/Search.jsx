@@ -1,24 +1,39 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import Result from '.././components/Result';
 
 export default class Search extends Component {
   constructor(){
     super()
     this.state = {
       input: '',
+      resultFound: false,
+      result: {}
     }
+    this.renderResult = this.renderResult.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
+
+  renderResult(){
+    if(this.state.resultFound) {
+      return <Result gem={this.state.result}/>
+    }
+  }
+
   handleChange(e){
     this.setState({input: e.target.value})
   }
+
   handleSubmit(e){
     e.preventDefault();
-    console.log(`initiating request for ${this.state.input}`)
     axios.get(`/api/gems/${this.state.input}`)
-    .then(results => console.log(results))
+    .then(results => {
+      console.log(results.data)
+      this.setState({result: results.data, resultFound: true})
+    })
   }
+
   render() {
     return (
       <div className='Search'>
@@ -32,6 +47,7 @@ export default class Search extends Component {
             Submit
           </button>
         </form>
+        <div>{this.renderResult()}</div>
       </div>
     );
   }
