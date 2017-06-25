@@ -25,23 +25,24 @@ export default class Search extends Component {
   }
 
   addFavorite(name){
-    let fav = { name }
-    axios.post('/api/create', fav)
-    .then(result => console.log(result))
-    .catch(err => console.error(err))
+    localStorage.setItem(name, name);
   }
 
   isFavorite (name){
-    return new Promise((resolve, reject) => {
-      axios.get(`/api/favorite/${name}`)
-      .then(result => {
-        console.log(`${name} is a favorite: `, result.data);
-        if(result.data){
-          resolve('./assets/images/star-blue.png')
-        }
-        resolve('./assets/images/star-gray.png')
-      })
-    })
+    if(localStorage.getItem(name)){
+      return './assets/images/star-blue.png';
+    }
+    return './assets/images/star-gray.png';
+    // return new Promise((resolve, reject) => {
+    //   axios.get(`/api/favorite/${name}`)
+    //   .then(result => {
+    //     console.log(`${name} is a favorite: `, result.data);
+    //     if(result.data){
+    //       resolve('./assets/images/star-blue.png')
+    //     }
+    //     resolve('./assets/images/star-gray.png')
+    //   })
+    // })
   }
 
   navigateTo(e){

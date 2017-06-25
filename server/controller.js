@@ -1,5 +1,4 @@
 const axios = require('axios');
-const model = require('./model');
 
 module.exports = {
   getGem: (req, res) => {
@@ -15,18 +14,4 @@ module.exports = {
     })
     .catch(err => console.error(err))
   },
-  addFavorite: (req, res) => {
-    model.insertFavorite(req.body);
-    res.sendStatus(201);
-  },
-  getFavorites: (req, res) => {
-    model.getFavorites((results) => {
-      res.send(results);
-    })
-  },
-  checkFavorite: (req, res) => {
-    model.checkFavorite(req.params.name, (result) => {
-      res.send(result);
-    })
-  }
 }

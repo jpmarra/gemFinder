@@ -7793,12 +7793,13 @@ var Name = function (_Component) {
   }, {
     key: 'componentDidMount',
     value: function componentDidMount() {
-      var _this2 = this;
-
-      this.props.isFavorite(this.props.name).then(function (url) {
-        console.log('here is the url: ', url);
-        _this2.setState({ url: url });
-      });
+      var url = this.props.isFavorite(this.props.name);
+      this.setState({ url: url });
+      // this.props.isFavorite(this.props.name)
+      // .then(url => {
+      //   console.log('here is the url: ',url);
+      //   this.setState({ url })
+      // })
     }
   }, {
     key: 'render',
@@ -7847,8 +7848,6 @@ var _axios2 = _interopRequireDefault(_axios);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -7872,13 +7871,8 @@ var Favorites = function (_Component) {
   _createClass(Favorites, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      var _this2 = this;
-
-      _axios2.default.get('/api/favorites').then(function (results) {
-        var favorites = [].concat(_toConsumableArray(_this2.state.favorites), _toConsumableArray(results.data));
-        console.log('Favorites in state ', favorites);
-        _this2.setState({ favorites: favorites });
-      });
+      var favorites = Object.keys(localStorage);
+      this.setState({ favorites: favorites });
     }
   }, {
     key: 'render',
@@ -7892,7 +7886,7 @@ var Favorites = function (_Component) {
           'Your Favorite Gems'
         ),
         this.state.favorites.map(function (favorite) {
-          console.log(favorite.length);
+          console.log(favorite);
           return _react2.default.createElement(
             'div',
             { className: 'name-container' },
@@ -7900,9 +7894,9 @@ var Favorites = function (_Component) {
               'a',
               { className: 'name-header',
                 target: '_blank',
-                href: 'https://rubygems.org/gems/' + favorite.name
+                href: 'https://rubygems.org/gems/' + favorite
               },
-              favorite.name
+              favorite
             ),
             _react2.default.createElement('img', { src: './assets/images/star-blue.png' })
           );
@@ -26794,25 +26788,25 @@ var Search = function (_Component) {
   }, {
     key: 'addFavorite',
     value: function addFavorite(name) {
-      var fav = { name: name };
-      _axios2.default.post('/api/create', fav).then(function (result) {
-        return console.log(result);
-      }).catch(function (err) {
-        return console.error(err);
-      });
+      localStorage.setItem(name, name);
     }
   }, {
     key: 'isFavorite',
     value: function isFavorite(name) {
-      return new Promise(function (resolve, reject) {
-        _axios2.default.get('/api/favorite/' + name).then(function (result) {
-          console.log(name + ' is a favorite: ', result.data);
-          if (result.data) {
-            resolve('./assets/images/star-blue.png');
-          }
-          resolve('./assets/images/star-gray.png');
-        });
-      });
+      if (localStorage.getItem(name)) {
+        return './assets/images/star-blue.png';
+      }
+      return './assets/images/star-gray.png';
+      // return new Promise((resolve, reject) => {
+      //   axios.get(`/api/favorite/${name}`)
+      //   .then(result => {
+      //     console.log(`${name} is a favorite: `, result.data);
+      //     if(result.data){
+      //       resolve('./assets/images/star-blue.png')
+      //     }
+      //     resolve('./assets/images/star-gray.png')
+      //   })
+      // })
     }
   }, {
     key: 'navigateTo',
