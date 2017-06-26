@@ -35,7 +35,7 @@ export default class Nav extends Component {
             </button>
           </div>
         </div>
-        <div className="nav-container col-sm-3">
+        <div className="nav-container col-xs-3">
           <img className="teachable-logo" src="./assets/images/teachable-logo.png"/>
           <div className="nav-links">
             <button className={this.state.selectedTab === 'search' ? 'active-link' : 'nav-link'} onClick={() => this.changeTab('/')}>
