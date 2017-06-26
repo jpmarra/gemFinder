@@ -10,16 +10,11 @@ export default class Favorites extends Component {
     }
     this.updateFavorites = this.updateFavorites.bind(this);
     this.handleClick = this.handleClick.bind(this);
-    this.navigateTo = this.navigateTo.bind(this);
   }
 
   updateFavorites(){
     let favorites = Object.keys(localStorage);
     this.setState({ favorites })
-  }
-
-  navigateTo(path){
-    this.props.history.push(path);
   }
 
   componentDidMount(){
@@ -33,22 +28,23 @@ export default class Favorites extends Component {
 
   render(){
     return (
-      <div>
-        <Nav navigateTo={this.navigateTo}/>
+      <div className="favorites-container">
         <h1>Your Favorite Gems</h1>
-        {this.state.favorites.map((favorite, idx) => {
-          return (
-            <div key={idx} className="name-container">
-              <a className="name-header"
-                target="_blank"
-                href={`https://rubygems.org/gems/${favorite}`}
-                >
-                {favorite}
-              </a>
-              <img src={'./assets/images/star-blue.png'} onClick={() => this.handleClick(favorite)}/>
-            </div>
-          )
-        })}
+        <div className="favorites-list">
+          {this.state.favorites.map((favorite, idx) => {
+            return (
+              <div key={idx} className="name-container">
+                <a className="name-header"
+                  target="_blank"
+                  href={`https://rubygems.org/gems/${favorite}`}
+                  >
+                  {favorite}
+                </a>
+                <img src={'./assets/images/star-blue.png'} onClick={() => this.handleClick(favorite)}/>
+              </div>
+            )
+          })}
+        </div>
       </div>
     );
   }

@@ -11,6 +11,9 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '/../public')));
 
 app.use('/api', router);
+app.get('*', (request, response) => {
+  response.sendFile(path.resolve(__dirname, '../public', 'index.html'));
+});
 
 app.listen(port);
 console.log(`Listening on ${port}`);

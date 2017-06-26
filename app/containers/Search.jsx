@@ -13,7 +13,6 @@ export default class Search extends Component {
     }
     this.renderResult = this.renderResult.bind(this);
     this.addFavorite = this.addFavorite.bind(this);
-    this.navigateTo = this.navigateTo.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.isFavorite = this.isFavorite.bind(this);
@@ -40,10 +39,6 @@ export default class Search extends Component {
     return './assets/images/star-gray.png';
   }
 
-  navigateTo(path){
-    this.props.history.push(path);
-  }
-
   handleChange(e){
     this.setState({input: e.target.value})
   }
@@ -59,7 +54,6 @@ export default class Search extends Component {
   render() {
     return (
       <div className='Search'>
-        <Nav navigateTo={this.navigateTo}/>
         <form>
           <input
             type="text" className="gem-input"
