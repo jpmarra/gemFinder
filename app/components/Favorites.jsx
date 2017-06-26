@@ -29,18 +29,18 @@ export default class Favorites extends Component {
   render(){
     return (
       <div className="favorites-container">
-        <h1>Your Favorite Gems</h1>
+        <h1 className="header">Your Favorite Gems</h1>
         <div className="favorites-list">
           {this.state.favorites.map((favorite, idx) => {
             return (
-              <div key={idx} className="name-container">
-                <a className="name-header"
+              <div key={idx} className="favorite">
+                <img className="favorite-star" src={'./assets/images/star-blue.png'} onClick={() => this.handleClick(favorite)}/>
+                <a className="favorite-header"
                   target="_blank"
                   href={`https://rubygems.org/gems/${favorite}`}
                   >
                   {favorite}
                 </a>
-                <img src={'./assets/images/star-blue.png'} onClick={() => this.handleClick(favorite)}/>
               </div>
             )
           })}

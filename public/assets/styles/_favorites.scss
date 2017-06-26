@@ -3,4 +3,59 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  padding-left: 5%;
+  @media only screen
+  and (min-device-width: 320px)
+  and (max-device-width: 480px)
+  and (-webkit-min-device-pixel-ratio: 2) {
+    padding-left: 0;
+    justify-content: flex-start;
+  }
+}
+
+.header {
+  font-weight: bold;
+  margin-bottom: 4%;
+  @media only screen
+  and (min-device-width: 320px)
+  and (max-device-width: 480px)
+  and (-webkit-min-device-pixel-ratio: 2) {
+    font-size: 100px;
+    text-align: center;
+    margin-top: 15%;
+    margin-bottom: 10%;
+  }
+}
+
+.favorites-list {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  height: 25%;
+  margin-bottom: 10%;
+  @media only screen
+  and (min-device-width: 320px)
+  and (max-device-width: 480px)
+  and (-webkit-min-device-pixel-ratio: 2) {
+    height: 40%;
+    flex-wrap: nowrap;
+  }
+}
+
+.favorite {
+  flex: 0 1 15%;
+  box-sizing: border-box;
+  @media only screen
+  and (min-device-width: 320px)
+  and (max-device-width: 480px)
+  and (-webkit-min-device-pixel-ratio: 2) {
+    flex: 1 1 10%;
+    font-size: 50px;
+    box-sizing: inherit;
+  }
+}
+
+.favorite-star {
+  padding-right: 2%;
+  padding-left: 2%;
 }

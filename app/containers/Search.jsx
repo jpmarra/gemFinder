@@ -53,17 +53,21 @@ export default class Search extends Component {
 
   render() {
     return (
-      <div className='Search'>
-        <form>
-          <input
-            type="text" className="gem-input"
-            value={this.state.input}
-            onChange={this.handleChange}
-          />
-          <button type="submit" onClick={this.handleSubmit}>
-            Submit
-          </button>
-        </form>
+      <div className="page-container">
+        <div className="search-container">
+          <h1 className="search-header">Search Gems</h1>
+          <form>
+            <input
+              type="text" className="gem-input"
+              placeholder="Search"
+              value={this.state.input}
+              onChange={this.handleChange}
+            />
+          <button className="search-button" type="submit" onClick={this.handleSubmit}>
+              <img src="./assets/images/magnifying-glass.png"/>
+            </button>
+          </form>
+        </div>
         <div>{this.renderResult()}</div>
       </div>
     );

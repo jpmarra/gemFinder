@@ -23,14 +23,28 @@ export default class Nav extends Component {
 
   render() {
     return (
-      <div className="nav-container col-sm-3">
-        <div className="nav-links">
-          <button className={this.state.selectedTab === 'search' ? 'active-link' : 'nav-link'} onClick={() => this.changeTab('/')}>
-            Search
-          </button>
-          <button className={this.state.selectedTab === 'favorites' ? 'active-link' : 'nav-link'} onClick={() => this.changeTab('favorites')}>
-            Favorites
-          </button>
+      <div className="nav-page-container">
+        <div className="mobile-nav-container">
+          <img className="teachable-logo" src="./assets/images/teachable-logo.png"/>
+          <div className="nav-links">
+            <button className={this.state.selectedTab === 'search' ? 'active-link' : 'nav-link'} onClick={() => this.changeTab('/')}>
+              Search
+            </button>
+            <button className={this.state.selectedTab === 'favorites' ? 'active-link' : 'nav-link'} onClick={() => this.changeTab('favorites')}>
+              Favorites
+            </button>
+          </div>
+        </div>
+        <div className="nav-container col-sm-3">
+          <img className="teachable-logo" src="./assets/images/teachable-logo.png"/>
+          <div className="nav-links">
+            <button className={this.state.selectedTab === 'search' ? 'active-link' : 'nav-link'} onClick={() => this.changeTab('/')}>
+              Search
+            </button>
+            <button className={this.state.selectedTab === 'favorites' ? 'active-link' : 'nav-link'} onClick={() => this.changeTab('favorites')}>
+              Favorites
+            </button>
+          </div>
         </div>
       </div>
     )
