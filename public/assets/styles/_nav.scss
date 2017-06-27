@@ -1,6 +1,25 @@
 body {
   font-family: 'Lato', sans-serif;
 }
+body::after {
+  @media only screen
+  and (min-device-width: 320px)
+  and (max-device-width: 480px)
+  and (-webkit-min-device-pixel-ratio: 2) {
+    content: "";
+    background: url('/assets/images/map.png');
+    background-position: right;
+    background-size: cover;
+    opacity: 0.2;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    z-index: -1;
+  }
+}
+
 :focus {
   outline: none;
 }
