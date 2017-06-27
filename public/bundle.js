@@ -29513,14 +29513,14 @@ var Favorites = function (_Component) {
       this.setState({ favorites: favorites });
     }
   }, {
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      this.updateFavorites();
-    }
-  }, {
     key: 'handleClick',
     value: function handleClick(favorite) {
       localStorage.removeItem(favorite);
+      this.updateFavorites();
+    }
+  }, {
+    key: 'componentDidMount',
+    value: function componentDidMount() {
       this.updateFavorites();
     }
   }, {

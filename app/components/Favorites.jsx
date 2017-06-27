@@ -17,12 +17,12 @@ export default class Favorites extends Component {
     this.setState({ favorites })
   }
 
-  componentDidMount(){
+  handleClick(favorite){
+    localStorage.removeItem(favorite)
     this.updateFavorites()
   }
 
-  handleClick(favorite){
-    localStorage.removeItem(favorite)
+  componentDidMount(){
     this.updateFavorites()
   }
 
