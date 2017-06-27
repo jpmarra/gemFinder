@@ -8541,11 +8541,9 @@ var Nav = function (_Component) {
       if (tab === 'favorites') {
         this.props.navigateTo('/favorites');
         this.setState({ selectedTab: 'favorites' });
-        console.log(this.state.selectedTab);
       } else {
         this.props.navigateTo('/');
         this.setState({ selectedTab: 'search' });
-        console.log(this.state.selectedTab);
       }
     }
   }, {
