@@ -4,9 +4,6 @@ import Name from './Name'
 export default class Result extends Component {
   constructor(props){
     super(props);
-    this.state = {
-
-    }
     this.loadDependencies = this.loadDependencies.bind(this);
   }
   loadDependencies(){

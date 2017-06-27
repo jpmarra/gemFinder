@@ -29308,7 +29308,6 @@ var Result = function (_Component) {
 
     var _this = _possibleConstructorReturn(this, (Result.__proto__ || Object.getPrototypeOf(Result)).call(this, props));
 
-    _this.state = {};
     _this.loadDependencies = _this.loadDependencies.bind(_this);
     return _this;
   }
