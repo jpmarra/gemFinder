@@ -3,6 +3,7 @@
   flex-direction: column;
   height: 100%;
 }
+
 .search-header {
   padding-left: 6%;
   font-weight: bold;
@@ -46,6 +47,17 @@
     font-size: 40px;
   }
 
+}
+
+.error {
+  color: red;
+  font-size: 20px;
+  width: 60%;
+  text-align: center;
+}
+
+.error-input {
+  border: 1px solid red !important;
 }
 
 .search-button {

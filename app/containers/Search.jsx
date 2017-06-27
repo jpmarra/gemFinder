@@ -19,6 +19,9 @@ export default class Search extends Component {
   }
 
   renderResult(){
+    if(this.state.result === "error" ) {
+      return <p className="error">Oh no! Looks like that gem can't be found.</p>
+    }
     if(this.state.resultFound) {
       return <Result gem={this.state.result} isFavorite={this.isFavorite} addFavorite={this.addFavorite} />
     }
@@ -48,7 +51,11 @@ export default class Search extends Component {
     e.preventDefault();
     axios.get(`/api/gems/${this.state.input}`)
     .then(results => {
-      this.setState({result: results.data, resultFound: true})
+      if(results.data === "not found"){
+        this.setState({result: "error"})
+      } else {
+        this.setState({result: results.data, resultFound: true})
+      }
     })
   }
 
@@ -59,13 +66,13 @@ export default class Search extends Component {
           <h1 className="search-header">Search Gems</h1>
           <form>
             <input
-              type="text" className="gem-input"
+              type="text" className={this.state.result === "error" ? "error-input gem-input" : "gem-input"}
               placeholder="Search"
               value={this.state.input}
               onChange={this.handleChange}
             />
-          <button className="search-button" type="submit" onClick={this.handleSubmit}>
-              <img src="./assets/images/magnifying-glass.png"/>
+          <button className={this.state.result === "error" ? "red search-button" : "search-button"} type="submit" onClick={this.handleSubmit}>
+              <img className={this.state.result === "error" ? "red-search-logo" : "search-logo"} src="./assets/images/magnifying-glass.png"/>
             </button>
           </form>
         </div>

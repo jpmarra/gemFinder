@@ -4,6 +4,7 @@ module.exports = {
   getGem: (req, res) => {
     axios.get(`https://rubygems.org/api/v1/gems/${req.params.gem}.json`)
     .then(results => {
+    console.log(results);
       let gem = {
         name: results.data.name,
         info: results.data.info,
@@ -12,6 +13,6 @@ module.exports = {
       };
       res.send(gem)
     })
-    .catch(err => console.error(err))
+    .catch(err => res.send('not found'));
   },
 }
