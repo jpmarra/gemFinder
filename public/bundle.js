@@ -28341,7 +28341,8 @@ var Search = function (_Component) {
   }, {
     key: 'handleChange',
     value: function handleChange(e) {
-      this.setState({ input: e.target.value });
+      var input = e.target.value.toLowerCase();
+      this.setState({ input: input });
     }
   }, {
     key: 'handleSubmit',

@@ -40,7 +40,8 @@ export default class Search extends Component {
   }
 
   handleChange(e){
-    this.setState({input: e.target.value})
+    let input = e.target.value.toLowerCase();
+    this.setState({ input });
   }
 
   handleSubmit(e){
